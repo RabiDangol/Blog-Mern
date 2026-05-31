@@ -1,5 +1,10 @@
 import {
+  Avatar,
   Button,
+  Dropdown,
+  DropdownDivider,
+  DropdownHeader,
+  DropdownItem,
   Navbar,
   NavbarCollapse,
   NavbarToggle,
@@ -9,9 +14,11 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
   //const path = useLocation().pathname;
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <>
       <Navbar className="border-b-2 bg-white">
@@ -39,11 +46,38 @@ export const Header = () => {
           <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
             <FaMoon></FaMoon>
           </Button>
-          <Link to="/sign-in">
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-              Sign In
-            </Button>
-          </Link>
+          {currentUser ? (
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar
+                  alt="user"
+                  img={currentUser.profilePicture}
+                  rounded
+                ></Avatar>
+              }
+            >
+              <DropdownHeader>
+                <span className="block text-sm">@{currentUser.username}</span>
+                <span className="block text-sm font-medium truncate">
+                  @{currentUser.email}
+                </span>
+              </DropdownHeader>
+              <Link to={"/dashboard?tab=profile"}>
+                <DropdownItem>Profile</DropdownItem>
+              </Link>
+              <DropdownDivider></DropdownDivider>
+              <DropdownItem>Sign-Out</DropdownItem>
+            </Dropdown>
+          ) : (
+            <Link to="/sign-in">
+              <Button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+                Sign In
+              </Button>
+            </Link>
+          )}
+          ;
           <NavbarToggle className="text-base" />
         </div>
         <NavbarCollapse className="text-lg pl-2 pb-2">
