@@ -13,12 +13,15 @@ import {
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 export const Header = () => {
   //const path = useLocation().pathname;
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  const { theme } = useSelector((state) => state.theme);
   return (
     <>
       <Navbar className="border-b-2 bg-white">
@@ -43,8 +46,13 @@ export const Header = () => {
           <AiOutlineSearch></AiOutlineSearch>
         </Button>
         <div className="flex gap-2 md:order-2">
-          <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
-            <FaMoon></FaMoon>
+          <Button
+            className="w-12 h-10 hidden sm:inline"
+            color="gray"
+            pill
+            onClick={() => dispatch(toggleTheme())}
+          >
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
           </Button>
           {currentUser ? (
             <Dropdown
@@ -77,7 +85,6 @@ export const Header = () => {
               </Button>
             </Link>
           )}
-          ;
           <NavbarToggle className="text-base" />
         </div>
         <NavbarCollapse className="text-lg pl-2 pb-2">
@@ -86,7 +93,7 @@ export const Header = () => {
             className={({ isActive }) =>
               isActive
                 ? "text-indigo-600 font-semibold "
-                : "text-white hover:text-red-600"
+                : " text-gray-700 hover:text-indigo-600 dark:text-gray-200 dark:hover:text-red-600"
             }
           >
             Home
@@ -96,7 +103,7 @@ export const Header = () => {
             className={({ isActive }) =>
               isActive
                 ? "text-indigo-600 font-semibold"
-                : "text-white hover:text-red-600"
+                : " text-gray-700 hover:text-indigo-600 dark:text-gray-200 dark:hover:text-red-600"
             }
           >
             About
@@ -106,7 +113,7 @@ export const Header = () => {
             className={({ isActive }) =>
               isActive
                 ? "text-indigo-600 font-semibold"
-                : "text-white hover:text-red-600"
+                : " text-gray-700 hover:text-indigo-600 dark:text-gray-200 dark:hover:text-red-600"
             }
           >
             Project
