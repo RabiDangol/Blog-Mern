@@ -63,9 +63,7 @@ const SignUp = () => {
         <div className="flex-1">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
-              <label value="Your username" className="text-black">
-                Your UserName
-              </label>
+              <label value="Your username">Your UserName</label>
               <TextInput
                 type="text"
                 placeholder="Username"
