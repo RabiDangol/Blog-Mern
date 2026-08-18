@@ -5,6 +5,7 @@ import {
   uploadProfileImage,
   updateUser,
   deleteUser,
+  signout,
 } from "../controllers/user.controller.js";
 import { verifyToken } from "../utils/verifyUser.js";
 
@@ -20,5 +21,8 @@ router.post("/upload", upload.single("image"), uploadProfileImage);
 
 //delete the account
 router.delete("/delete/:userId", verifyToken, deleteUser);
+
+//Signout the account
+router.post("/signout", signout);
 
 export default router;
