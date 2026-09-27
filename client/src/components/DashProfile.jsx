@@ -28,9 +28,10 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export default function DashProfile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   console.log(currentUser?.profilePicture);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -349,9 +350,20 @@ export default function DashProfile() {
           type="submit"
           className="bg-gradient-to-r from-red-500 to-purple-500"
           outline
+          disabled={loading || imageFileUploading}
         >
-          Update
+          {loading ? "Loading..." : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              className="bg-gradient-to-r from-red-500 to-purple-500 w-full"
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className=" text-red-500 flex justify-between mt-5">
         <span onClick={() => setShowModel(true)} className="cursor-pointer">
